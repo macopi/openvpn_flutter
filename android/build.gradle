@@ -33,7 +33,7 @@ allprojects {
 apply plugin: 'com.android.library'
 
 android {
-    compileSdkVersion 30
+    compileSdkVersion 31
 
     compileOptions {
         sourceCompatibility JavaVersion.VERSION_1_8
@@ -47,4 +47,15 @@ android {
 
 dependencies {
     implementation 'com.github.nizwar:openvpn_library:301af905ed'
+}
+
+allprojects {
+    project.configurations.all {
+	resolutionStrategy.eachDependency { details ->
+            if (details.requested.group == 'androidx.core' &&
+	       !details.requested.name.contains('androidx')) {
+		details.useVersion "1.6.0"
+            }
+	}
+    }    
 }
